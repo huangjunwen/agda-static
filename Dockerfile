@@ -1,7 +1,7 @@
 FROM i386/debian:11.11
 
 RUN apt-get update && \
-    apt-get install -y cabal-install pkg-config patch zlib1g-dev libncurses5-dev strip upx && \
+    apt-get install -y cabal-install pkg-config patch zlib1g-dev libncurses5-dev upx && \
     cabal update 
 
 WORKDIR /root
