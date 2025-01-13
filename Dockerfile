@@ -2,7 +2,7 @@
 FROM i386/debian:11.11
 
 RUN apt-get update && \
-    apt-get install -y cabal-install pkg-config zlib1g-dev libncurses5-dev && \
+    apt-get install -y cabal-install pkg-config patch zlib1g-dev libncurses5-dev && \
     cabal update 
 
 COPY patches /root/patches
