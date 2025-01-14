@@ -15,3 +15,10 @@ RUN cabal get Agda-$AGDA_VER && \
     cd Agda-$AGDA_VER && \
     patch -p1 < /root/patches/Agda-$AGDA_VER.patch && \
     cabal build --enable-split-objs -O2
+
+
+FROM i386/alpine:3.21
+
+ARG AGDA_VER=2.6.4.3
+
+COPY --from=0 /root/Agda-$AGDA_VER/* /Agda-$AGDA_VER
