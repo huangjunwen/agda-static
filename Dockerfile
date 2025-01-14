@@ -21,5 +21,5 @@ FROM i386/alpine:3.21
 
 ARG AGDA_VER=2.6.4.3
 
-COPY --from=0 /root/Agda-$AGDA_VER/* /Agda-$AGDA_VER
-COPY --from=0 /root/.cabal/bin/* /usr/local/agda/bin
+COPY --from=0 /root/Agda-$AGDA_VER/. /Agda-$AGDA_VER/
+COPY --from=0 /root/.cabal/bin/. /usr/local/agda/bin/
