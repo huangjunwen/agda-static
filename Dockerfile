@@ -14,4 +14,4 @@ ARG PREFIX=/usr/local
 RUN cabal get Agda-$AGDA_VER && \
     cd Agda-$AGDA_VER && \
     patch -p1 < /root/patches/Agda-$AGDA_VER.patch && \
-    cabal install --enable-split-objs --bindir=$PREFIX/bin --libdir=$PREFIX/lib --datadir=$PREFIX/share
+    cabal build --enable-split-objs -O2 && \
