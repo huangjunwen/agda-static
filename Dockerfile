@@ -28,5 +28,3 @@ COPY --from=0 /root/Agda/src/data/. /share/agda/
 COPY --from=0 /root/.cabal/bin/. /bin/
 
 ENV Agda_datadir=/share/agda
-
-ENTRYPOINT ["/bin/agda"]
