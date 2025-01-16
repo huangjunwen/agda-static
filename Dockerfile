@@ -9,7 +9,6 @@ WORKDIR /root
 COPY patches /root/patches
 
 ARG AGDA_VER=2.6.4.3
-ARG PREFIX=/usr/local
 
 RUN cabal get Agda-$AGDA_VER && \
     cd Agda-$AGDA_VER && \
@@ -22,7 +21,8 @@ RUN cabal get Agda-$AGDA_VER && \
 
 ##############################################
 
-FROM i386/alpine:3.21
+# FROM i386/alpine:3.21
+FROM --platform=i386 scratch
 
 COPY --from=0 /root/Agda/src/data/. /share/agda/
 COPY --from=0 /root/.cabal/bin/. /bin/
