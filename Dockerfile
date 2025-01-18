@@ -14,9 +14,9 @@ RUN cabal get Agda-$AGDA_VER && \
     mv Agda-$AGDA_VER Agda && \
     cd Agda && \
     patch -p1 < /root/patches/Agda-$AGDA_VER.patch && \
-    cabal install --enable-split-objs -O2  --install-method=copy # && \
-    # upx /root/.cabal/bin/agda && \
-    # upx /root/.cabal/bin/agda-mode
+    cabal install --enable-split-objs -O2  --install-method=copy
+
+# RUN upx /root/.cabal/bin/agda && upx /root/.cabal/bin/agda-mode
 
 ##############################################
 
