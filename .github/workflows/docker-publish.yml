@@ -10,7 +10,7 @@ on:
 # and a name for the Docker image that this workflow builds.
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: agda-i386-static
+  IMAGE_NAME: huangjunwen/agda-i386-static
 
 jobs:
   build-and-push-image:
