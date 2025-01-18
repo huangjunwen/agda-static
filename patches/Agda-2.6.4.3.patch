@@ -20,3 +20,23 @@ index eea0735..8a252df 100644
 +    -fPIC
 +  ld-options:
 +    -static
+diff --git a/src/full/Agda/Interaction/Library.hs b/src/full/Agda/Interaction/Library.hs
+index 3b81319..19cdf32 100644
+--- a/src/full/Agda/Interaction/Library.hs
++++ b/src/full/Agda/Interaction/Library.hs
+@@ -127,10 +127,11 @@ mkLibM libs m = do
+ getAgdaAppDir :: IO FilePath
+ getAgdaAppDir = do
+   -- System-specific command to build the path to ~/.agda (Unix) or %APPDATA%\agda (Win)
+-  let agdaDir = getAppUserDataDirectory "agda" >>= \legacyAgdaDir ->
+-        ifM (doesDirectoryExist legacyAgdaDir)
+-            (pure legacyAgdaDir)
+-            (getXdgDirectory XdgConfig "agda")
++  -- let agdaDir = getAppUserDataDirectory "agda" >>= \legacyAgdaDir ->
++  --       ifM (doesDirectoryExist legacyAgdaDir)
++  --           (pure legacyAgdaDir)
++  --           (getXdgDirectory XdgConfig "agda")
++  let agdaDir = return "/root/.agda"
+   -- The default can be overwritten by setting the AGDA_DIR environment variable
+   caseMaybeM (lookupEnv "AGDA_DIR") agdaDir $ \ dir ->
+       ifM (doesDirectoryExist dir) (canonicalizePath dir) $ do
