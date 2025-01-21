@@ -57,6 +57,7 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}
           labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/${{ matrix.arch }}
       
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
