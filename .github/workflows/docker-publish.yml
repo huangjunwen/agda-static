@@ -10,7 +10,7 @@ on:
 # and a name for the Docker image that this workflow builds.
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: huangjunwen/agda-i386-static
+  IMAGE_NAME: huangjunwen/agda-static
 
 jobs:
   build-and-push-image:
@@ -26,6 +26,9 @@ jobs:
       matrix:
         agda_version:
           - "2.6.4.3"
+        arch:
+          - "amd64"
+          - "i386"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -48,10 +51,11 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          file: Dockerfile.${{ matrix.arch }}
           build-args:
             AGDA_VER=${{ matrix.agda_version }}
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.agda_version }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}
           labels: ${{ steps.meta.outputs.labels }}
       
       - name: Generate artifact attestation
