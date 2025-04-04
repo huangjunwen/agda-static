@@ -12,8 +12,7 @@ COPY patches /root/patches
 
 ARG AGDA_VER
 
-# https://wiki.portal.chalmers.se/agda/Libraries/StandardLibrary
-RUN source /root/envs/env-$AGDA_VER && \
+RUN . /root/envs/env-$AGDA_VER && \
     git clone -b $AGDA_VER --depth 1 https://github.com/agda/agda.git /root/Agda && \
     git clone -b $$AGDA_STDLIB_VER --depth 1 https://github.com/agda/agda-stdlib.git /root/AgdaStdLib && \
     cd /root/Agda && \
@@ -32,10 +31,10 @@ COPY --from=0 /root/AgdaStdLib/src/. /share/agda/stdlib/src/
 COPY --from=0 /root/AgdaStdLib/src/standard-library.agda-lib /share/agda/stdlib/standard-library.agda-lib
 
 # https://agda.readthedocs.io/en/latest/tools/package-system.html
+# https://wiki.portal.chalmers.se/agda/Libraries/StandardLibrary
 RUN mkdir -p /root/.config/agda && \
     echo "/share/agda/stdlib/standard-library.agda-lib" > /root/.config/agda/libraries && \
-    echo "standard-library" > /root/.config/agda/defaults && \
-
+    echo "standard-library" > /root/.config/agda/defaults
 
 ENV Agda_datadir=/share/agda/builtin
 
