@@ -1,7 +1,7 @@
 FROM --platform=i386 i386/debian:11.11
 
 RUN apt-get update && \
-    apt-get install -y cabal-install pkg-config patch zlib1g-dev libncurses5-dev upx && \
+    apt-get install -y git cabal-install pkg-config patch zlib1g-dev libncurses5-dev upx && \
     cabal update 
 
 WORKDIR /root
@@ -10,11 +10,16 @@ COPY patches /root/patches
 
 ARG AGDA_VER
 
-RUN cabal get Agda-$AGDA_VER && \
-    mv Agda-$AGDA_VER Agda && \
+RUN git clone -b $Agda --depth 1 https://github.com/agda/agda.git Agda && \
     cd Agda && \
     patch -p1 < /root/patches/Agda-$AGDA_VER.patch && \
     cabal install --enable-split-objs -O2  --install-method=copy
+
+# RUN cabal get Agda-$AGDA_VER && \
+#     mv Agda-$AGDA_VER Agda && \
+#     cd Agda && \
+#     patch -p1 < /root/patches/Agda-$AGDA_VER.patch && \
+#     cabal install --enable-split-objs -O2  --install-method=copy
 
 RUN upx /root/.cabal/bin/agda && upx /root/.cabal/bin/agda-mode
 
