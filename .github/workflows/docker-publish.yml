@@ -25,7 +25,7 @@ jobs:
     strategy:
       matrix:
         agda_version:
-          - "2.6.4.3"
+          - "v2.6.4.3"
         arch:
           - "amd64"
           - "i386"
