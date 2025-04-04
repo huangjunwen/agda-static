@@ -12,14 +12,15 @@ COPY patches /root/patches
 
 ARG AGDA_VER
 
-RUN git clone -b $AGDA_VER --depth 1 https://github.com/agda/agda.git /root/Agda && \
+# https://wiki.portal.chalmers.se/agda/Libraries/StandardLibrary
+RUN source /root/envs/env-$AGDA_VER && \
+    git clone -b $AGDA_VER --depth 1 https://github.com/agda/agda.git /root/Agda && \
+    git clone -b $$AGDA_STDLIB_VER --depth 1 https://github.com/agda/agda-stdlib.git /root/AgdaStdLib && \
     cd /root/Agda && \
     patch -p1 < /root/patches/Agda-$AGDA_VER.patch && \
     cabal install --enable-split-objs -O2  --install-method=copy
 
 RUN upx /root/.cabal/bin/agda && upx /root/.cabal/bin/agda-mode
-
-RUN source /root/envs/env-$AGDA_VER && git clone -b $AGDA_STDLIB_VER --depth 1 https://github.com/agda/agda-stdlib.git /root/AgdaStdLib
 
 ##############################################
 
@@ -27,7 +28,8 @@ FROM --platform=amd64 alpine:3.21
 
 COPY --from=0 /root/.cabal/bin/. /bin/
 COPY --from=0 /root/Agda/src/data/. /share/agda/builtin/
-COPY --from=0 /root/AgdaStdLib /share/agda/stdlib
+COPY --from=0 /root/AgdaStdLib/src/. /share/agda/stdlib/src/
+COPY --from=0 /root/AgdaStdLib/src/standard-library.agda-lib /share/agda/stdlib/standard-library.agda-lib
 
 # https://agda.readthedocs.io/en/latest/tools/package-system.html
 RUN mkdir -p /root/.config/agda && \
