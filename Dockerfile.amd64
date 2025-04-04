@@ -14,7 +14,7 @@ ARG AGDA_VER
 
 RUN . /root/envs/env-$AGDA_VER && \
     git clone -b $AGDA_VER --depth 1 https://github.com/agda/agda.git /root/Agda && \
-    git clone -b $$AGDA_STDLIB_VER --depth 1 https://github.com/agda/agda-stdlib.git /root/AgdaStdLib && \
+    git clone -b $AGDA_STDLIB_VER --depth 1 https://github.com/agda/agda-stdlib.git /root/AgdaStdLib && \
     cd /root/Agda && \
     patch -p1 < /root/patches/Agda-$AGDA_VER.patch && \
     cabal install --enable-split-objs -O2  --install-method=copy
