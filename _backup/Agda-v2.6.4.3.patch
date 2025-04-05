@@ -1,19 +1,19 @@
 diff --git a/Agda.cabal b/Agda.cabal
-index eea0735..8a252df 100644
+index b7cdd27..eab5c6e 100644
 --- a/Agda.cabal
 +++ b/Agda.cabal
-@@ -869,6 +869,9 @@ executable agda
+@@ -867,6 +867,9 @@ executable agda
      -threaded
      -rtsopts
      -with-rtsopts=-I0
 +    -fPIC
 +  ld-options:
 +    -static
-
+ 
  -- agda-mode executable
  ---------------------------------------------------------------------------
-@@ -884,3 +887,7 @@ executable agda-mode
-     , filepath  >= 1.4.2.1  && < 1.6
+@@ -882,3 +885,7 @@ executable agda-mode
+     , filepath  >= 1.4.2.1  && < 1.5
      , process   >= 1.6.3.0  && < 1.7
    default-language: Haskell2010
 +  ghc-options:
