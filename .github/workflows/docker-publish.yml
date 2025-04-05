@@ -53,7 +53,7 @@ jobs:
           context: .
           file: Dockerfile
           build-args:
-            ARCH=${{ matrix.arch }}
+            # ARCH=${{ matrix.arch }}
             AGDA_VER=${{ matrix.agda_version }}
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}
