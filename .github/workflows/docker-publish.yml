@@ -28,7 +28,7 @@ jobs:
           - "v2.6.4.3"
         arch:
           - "amd64"
-          # - "i386"
+          - "i386"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -51,8 +51,9 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: Dockerfile.${{ matrix.arch }}
+          file: Dockerfile
           build-args:
+            ARCH=${{ matrix.arch }}
             AGDA_VER=${{ matrix.agda_version }}
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}

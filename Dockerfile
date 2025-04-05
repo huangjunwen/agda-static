@@ -1,4 +1,4 @@
-FROM --platform=amd64 debian:11.11
+FROM --platform=$ARCH debian:11.11
 
 RUN apt-get update && \
     apt-get install -y git cabal-install pkg-config patch zlib1g-dev libncurses5-dev upx && \
@@ -23,7 +23,7 @@ RUN upx /root/.cabal/bin/agda && upx /root/.cabal/bin/agda-mode
 
 ##############################################
 
-FROM --platform=amd64 alpine:3.21
+FROM --platform=$ARCH alpine:3.21
 
 COPY --from=0 /root/.cabal/bin/. /bin/
 COPY --from=0 /root/agda/. /opt/agda/
