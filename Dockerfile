@@ -25,16 +25,17 @@ RUN upx /root/.cabal/bin/agda && upx /root/.cabal/bin/agda-mode
 
 FROM alpine:3.21
 
-COPY --from=0 /root/.cabal/bin/. /bin/
-COPY --from=0 /root/agda/. /opt/agda/
-COPY --from=0 /root/agda-stdlib/. /opt/agda-stdlib/
+COPY --from=0 /root/.cabal/bin/agda      /agda-static/bin/agda.static
+COPY --from=0 /root/.cabal/bin/agda-mode /agda-static/bin/agda-mode.static
+COPY bin/agda                            /agda-static/bin/agda
+COPY bin/agda-mode                       /agda-static/bin/agda-mode
+COPY --from=0 /root/agda/src/data/.      /agda-static/share/agda/data
+COPY --from=0 /root/agda-stdlib/.        /agda-static/share/agda/stdlib
 
 # https://agda.readthedocs.io/en/latest/tools/package-system.html
 # https://wiki.portal.chalmers.se/agda/Libraries/StandardLibrary
-RUN mkdir -p /root/.config/agda && \
-    echo "/opt/agda-stdlib/standard-library.agda-lib" > /root/.config/agda/libraries && \
-    echo "standard-library" > /root/.config/agda/defaults
+RUN mkdir -p /agda-static/etc && \
+    echo "/agda-static/share/agda/stdlib/standard-library.agda-lib" > /agda-static/etc/agda/libraries && \
+    echo "standard-library" > /agda-static/etc/agda/defaults
 
-ENV Agda_datadir=/opt/agda/src/data
-
-CMD ["/bin/agda"]
+CMD ["/agda-static/bin/agda"]
