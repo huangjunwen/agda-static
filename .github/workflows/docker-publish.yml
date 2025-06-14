@@ -3,7 +3,7 @@ name: Create and publish a Docker image
 
 on:
   push:
-    branches: ['master']
+    branches: ['build']
 
 # Defines two custom environment variables for the workflow. 
 # These are used for the Container registry domain, 
@@ -28,7 +28,7 @@ jobs:
           - "v2.6.4.3"
         arch:
           - "amd64"
-          - "i386"
+          # - "i386"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

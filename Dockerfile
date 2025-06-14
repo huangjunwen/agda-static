@@ -38,4 +38,6 @@ COPY --from=0 /root/agda-libs/.          /agda-static/share/agda/libs
 RUN /agda-static/bin/agda --print-agda-data-dir && \
     /agda-static/bin/agda --print-agda-app-dir
 
+ENV PATH /agda-static/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 CMD ["/agda-static/bin/agda"]
