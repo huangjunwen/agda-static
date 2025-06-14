@@ -29,15 +29,15 @@ RUN . /root/envs/env-$AGDA_VER && \
 
 FROM bash:5.2
 
-COPY bin/.                               /agda-static/bin
+ENV PATH /agda-static/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 COPY --from=0 /root/.cabal/bin/.         /agda-static/bin/agda-static
 COPY --from=0 /root/agda/src/data/.      /agda-static/share/agda/data
 COPY --from=0 /root/agda-libs/.          /agda-static/share/agda/libs
+COPY bin/.                               /agda-static/bin
 
 # Gen libraries/defaults files
 RUN /agda-static/bin/agda --print-agda-data-dir && \
     /agda-static/bin/agda --print-agda-app-dir
-
-ENV PATH /agda-static/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 CMD ["/agda-static/bin/agda"]
