@@ -28,7 +28,7 @@ jobs:
           - "v2.6.4.3"
         arch:
           - "amd64"
-          # - "i386"
+          - "i386"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
