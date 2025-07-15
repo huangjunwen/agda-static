@@ -1,4 +1,5 @@
-FROM debian:11.11
+# debian 11.11
+FROM debian:bullseye-20250630
 
 ARG AGDA_VER
 WORKDIR /root
