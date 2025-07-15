@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+AGDA_WRAPPED_CMD=agda-mode exec $SCRIPT_DIR/agda-static-wrapper "$@"

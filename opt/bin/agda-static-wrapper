@@ -5,9 +5,11 @@
 # https://wiki.portal.chalmers.se/agda/Libraries/StandardLibrary
 
 # Find relative path
-BIN_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-SHR_DIR=$( realpath $BIN_DIR/../share )
-ETC_DIR=$( realpath $BIN_DIR/../etc )
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+OPT_DIR=$(realpath $SCRIPT_DIR/..)
+BIN_DIR=$(realpath $OPT_DIR/../bin)
+SHR_DIR=$(realpath $BIN_DIR/../share)
+ETC_DIR=$(realpath $BIN_DIR/../etc)
 DATA_DIR=$SHR_DIR/agda/data
 LIBS_DIR=$SHR_DIR/agda/libs
 APP_DIR=$ETC_DIR/agda
@@ -15,15 +17,15 @@ APP_DIR=$ETC_DIR/agda
 # Registry all the libs into libraries and defaults if not exists
 if [ ! -f $APP_DIR/libraries ]; then
   mkdir -p $APP_DIR
-  find $LIBS_DIR -maxdepth 2 -mindepth 2 -name "*.agda-lib" -print > $APP_DIR/libraries
+  find $LIBS_DIR -maxdepth 2 -mindepth 2 -name "*.agda-lib" -print >$APP_DIR/libraries
 fi
 if [ ! -f $APP_DIR/defaults ]; then
   mkdir -p $APP_DIR
-  find $LIBS_DIR -maxdepth 2 -mindepth 2 -name "*.agda-lib" -exec grep "name:" {} \; | \
-      awk -F':' '{sub(/^ +/, "", $2); print $2;}' > $APP_DIR/defaults
+  find $LIBS_DIR -maxdepth 2 -mindepth 2 -name "*.agda-lib" -exec grep "name:" {} \; |
+    awk -F':' '{sub(/^ +/, "", $2); print $2;}' >$APP_DIR/defaults
 fi
 
-# Rut the real command
+# Run the real command
 export Agda_datadir=${Agda_datadir:-$DATA_DIR}
 export AGDA_DIR=${AGDA_DIR:-$APP_DIR}
-exec $BIN_DIR/agda-static/${AGDA_WRAPPED_CMD:-agda} "$@"
+exec $BIN_DIR/${AGDA_WRAPPED_CMD:-agda} "$@"

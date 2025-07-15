@@ -1,6 +1,6 @@
 # agda-static
 
-Tiny image of static built agda binaries with libs.
+Images of static built agda binaries with libs.
 
 ## Versions
 
@@ -10,17 +10,23 @@ Tiny image of static built agda binaries with libs.
 
 ## Portable
 
-All files are installed under `/agda-static` folder in the image.
+All files are installed under `/agda-static` folder in the image:
 
-And it's also portable, you can extract it anywhere to your host like:
+- `/agda-static/bin`: contains static built `agda` and `agda-mode` binaries
+- `/agda-static/share/agda/data`: contains builtin data files required, one should set environment variable `Agda_datadir` to this folder
+- `/agda-static/share/agda/libs`: contains libraries
+- `/agda-static/etc/agda`: contains `libraries` and `defaults` files, one should set environment variable `AGDA_DIR` to this folder
+- `/agda-static/opt/bin`: contains bash wrapper scripts for `agda` and `agda-mode`, which generate `libraries` and `defaults` files and set above environment variables automatically, you can put it in `PATH` for convenience
+
+It's portable, you can extract it anywhere to your host like:
 
 ```
 podman unshare bash -c 'mnt=$(podman image mount ghcr.io/huangjunwen/agda-static:amd64-v2.6.4.3); cp -r $mnt/agda-static .; rm -rf agda-static/etc/agda/*'
 ```
 
 NOTE: The `rm` part is to remove `libraries` and `defaults` files. 
-They will be re-generated next time when you run `agda` or `agda-mode` again.
-All libraries put to `agda-static/share/agda/libs` folder will be automatically added (so you can download your fav libs there)
+They will be re-generated next time when you run the wrappers again.
+All libraries put to `agda-static/share/agda/libs` folder will be automatically added (so you can download your favorite libs there)
 
 ## links
 
