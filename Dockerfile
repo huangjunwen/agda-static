@@ -31,11 +31,11 @@ FROM bash:5.2
 
 ENV PATH /agda-static/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-COPY --from=0 /root/.cabal/bin/agda      /agda-static/bin/agda-static/agda
-COPY --from=0 /root/.cabal/bin/agda-mode /agda-static/bin/agda-static/agda-mode
-COPY --from=0 /root/agda/src/data/.      /agda-static/share/agda/data
-COPY --from=0 /root/agda-libs/.          /agda-static/share/agda/libs
-COPY bin/.                               /agda-static/bin
+COPY --from=0 /root/.cabal/bin/agda.original      /agda-static/bin/agda-static/agda
+COPY --from=0 /root/.cabal/bin/agda-mode.original /agda-static/bin/agda-static/agda-mode
+COPY --from=0 /root/agda/src/data/.               /agda-static/share/agda/data
+COPY --from=0 /root/agda-libs/.                   /agda-static/share/agda/libs
+COPY bin/.                                        /agda-static/bin
 
 # Gen libraries/defaults files
 RUN /agda-static/bin/agda --print-agda-data-dir && \
