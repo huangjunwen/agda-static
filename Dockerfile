@@ -28,13 +28,14 @@ RUN . /root/envs/env-$AGDA_VER && \
 
 FROM bash:5.2
 
-ENV PATH /agda-static/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 COPY --from=0 /root/.cabal/bin/agda       /agda-static/bin/agda
 COPY --from=0 /root/.cabal/bin/agda-mode  /agda-static/bin/agda-mode
 COPY --from=0 /root/agda/src/data/.       /agda-static/share/agda/data
 COPY --from=0 /root/agda-libs/.           /agda-static/share/agda/libs
 COPY opt/bin/.                            /agda-static/opt/bin
+COPY opt/share/.                          /agda-static/opt/share
 
 # Gen libraries/defaults files
 # RUN /agda-static/opt/bin/agda --print-agda-data-dir && \
