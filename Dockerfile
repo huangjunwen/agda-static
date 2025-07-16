@@ -37,7 +37,7 @@ COPY --from=0 /root/agda-libs/.           /agda-static/share/agda/libs
 COPY opt/bin/.                            /agda-static/opt/bin
 
 # Gen libraries/defaults files
-RUN /agda-static/opt/bin/agda --print-agda-data-dir && \
-    /agda-static/opt/bin/agda --print-agda-app-dir
+# RUN /agda-static/opt/bin/agda --print-agda-data-dir && \
+#     /agda-static/opt/bin/agda --print-agda-app-dir
 
 CMD ["/agda-static/opt/bin/agda"]
