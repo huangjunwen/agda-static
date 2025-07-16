@@ -2,7 +2,6 @@
 FROM debian:bullseye-20250630
 
 ARG AGDA_VER
-ARG OPTIMIZATION_LEVEL
 WORKDIR /root
 
 RUN apt-get update && \
@@ -16,7 +15,7 @@ RUN . /root/envs/env-$AGDA_VER && \
     git clone -b $AGDA_VER --depth 1 https://github.com/agda/agda.git /root/agda && \
     cd /root/agda && \
     patch -p1 < /root/patches/Agda-$AGDA_VER.patch && \
-    cabal install --enable-split-objs -O$OPTIMIZATION_LEVEL  --install-method=copy
+    cabal install --enable-split-objs -O2  --install-method=copy
 
 RUN . /root/envs/env-$AGDA_VER && \
     mkdir -p /root/agda-libs && \
