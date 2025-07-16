@@ -29,6 +29,9 @@ jobs:
         arch:
           - "amd64"
           - "i386"
+        optimization_level:
+          - "0"
+          - "2"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -59,13 +62,14 @@ jobs:
           file: Dockerfile
           build-args:
             AGDA_VER=${{ matrix.agda_version }}
+            OPTIMIZATION_LEVEL=${{ matrix.optimization_level }}
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}-O${{ matrix.optimization_level }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/${{ matrix.arch }}
           # cache
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}-cache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}-cache,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}-O${{ matrix.optimization_level }}-cache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}-O${{ matrix.optimization_level }}-cache,mode=max
       
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
