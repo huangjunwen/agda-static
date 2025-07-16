@@ -24,7 +24,7 @@ You can extract it anywhere to your host like:
 podman unshare bash -c 'mnt=$(podman image mount ghcr.io/huangjunwen/agda-static:amd64-v2.6.4.3); cp -r $mnt/agda-static .'
 ```
 
-## links
+## Links
 
 - https://github.com/agda/agda
 - https://github.com/agda/agda-stdlib
