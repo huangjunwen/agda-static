@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source $SCRIPT_DIR/set-agda-static-paths
+
+# Only regist *.agda-lib found in top level in each of the library directories: -maxdepth 2 -mindepth 2
+
+if [ ! -f $LIBRARIES_FILE_PATH ]; then
+  mkdir -p $APP_DIR
+  find $LIBS_DIR -maxdepth 2 -mindepth 2 -name "*.agda-lib" -print >$LIBRARIES_FILE_PATH
+fi
+
+if [ ! -f $DEFAULTS_FILE_PATH ]; then
+  mkdir -p $APP_DIR
+  find $LIBS_DIR -maxdepth 2 -mindepth 2 -name "*.agda-lib" -exec grep "name:" {} \; |
+    awk -F':' '{sub(/^ +/, "", $2); print $2;}' >$APP_DIR/defaults
+fi

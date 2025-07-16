@@ -13,11 +13,11 @@ Images of static built agda binaries with libs.
 All files are installed under `/agda-static` folder in the image:
 
 - `/agda-static/bin`: contains static built `agda` and `agda-mode` binaries
-- `/agda-static/share/agda/data`: contains builtin data files required, one should set environment variable `Agda_datadir` to this folder
+- `/agda-static/share/agda/data`: contains required builtin files, one should set environment variable `Agda_datadir` to this folder
 - `/agda-static/share/agda/libs`: contains libraries
-- `/agda-static/etc/agda`: contains `libraries` and `defaults` files, one should set environment variable `AGDA_DIR` to this folder
-- `/agda-static/opt/bin`: contains bash wrapper scripts for `agda` and `agda-mode`, which generate `libraries` and `defaults` files and set above environment variables automatically, you can put it in `PATH` for convenience
-- `/agda-static/opt/share/agda/examples`: some random agda files
+- `/agda-static/etc/agda`: contains generated `libraries` and `defaults` files, one should set environment variable `AGDA_DIR` to this folder if want to use them
+- `/agda-static/opt/bin`: contains wrapper and helper bash scripts, which take cares your `libraries` and `defaults`, you can put it in `PATH` for convenience
+- `/agda-static/opt/share/agda/examples`: random example files
 
 You can extract it anywhere to your host like:
 
