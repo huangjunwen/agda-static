@@ -8,8 +8,8 @@
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 OPT_DIR=$(realpath $SCRIPT_DIR/..)
 BIN_DIR=$(realpath $OPT_DIR/../bin)
-SHR_DIR=$(realpath $BIN_DIR/../share)
-ETC_DIR=$(realpath $BIN_DIR/../etc)
+SHR_DIR=$(realpath $OPT_DIR/../share)
+ETC_DIR=$(realpath $OPT_DIR/../etc)
 DATA_DIR=$SHR_DIR/agda/data
 LIBS_DIR=$SHR_DIR/agda/libs
 APP_DIR=$ETC_DIR/agda
