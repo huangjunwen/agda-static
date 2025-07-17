@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-source $SCRIPT_DIR/set-agda-static-paths
-
-rm -f $LIBRARIES_FILE_PATH
-rm -f $DEFAULTS_FILE_PATH

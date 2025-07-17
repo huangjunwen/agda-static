@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Ref
+# https://agda.readthedocs.io/en/latest/tools/package-system.html
+# https://wiki.portal.chalmers.se/agda/Libraries/StandardLibrary
+
+# NOTE: This file should be placed in the same directory as agda
+BIN_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+SHR_DIR=$(realpath $BIN_DIR/../share)
+ETC_DIR=$(realpath $BIN_DIR/../etc)
+OPT_DIR=$(realpath $BIN_DIR/../opt)
+DATA_DIR=$SHR_DIR/agda/data
+LIBS_DIR=$SHR_DIR/agda/libs
+OPT_LIBS_DIR=$OPT_DIR/agda/libs
+APP_DIR=$ETC_DIR/agda
+
+# Find file paths
+LIBRARIES_FILE_PATH=$APP_DIR/libraries
+DEFAULTS_FILE_PATH=$APP_DIR/defaults
+
+# NOTE: Only regist *.agda-lib found in top level in each of the library directories: -maxdepth 2 -mindepth 2
+
+mkdir -p $APP_DIR
+find $LIBS_DIR $OPT_LIBS_DIR -maxdepth 2 -mindepth 2 -name "*.agda-lib" -print >$LIBRARIES_FILE_PATH
+find $LIBS_DIR $OPT_LIBS_DIR -maxdepth 2 -mindepth 2 -name "*.agda-lib" -exec grep "name:" {} \; |
+  awk -F':' '{sub(/^ +/, "", $2); print $2;}' >$APP_DIR/defaults

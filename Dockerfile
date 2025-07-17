@@ -8,8 +8,8 @@ RUN apt-get update && \
     apt-get install -y curl git cabal-install pkg-config patch zlib1g-dev libncurses5-dev && \
     cabal update 
 
-COPY envs /root/envs
-COPY patches /root/patches
+COPY image_files/envs/.     /root/envs/
+COPY image_files/patches/.  /root/patches/
 
 RUN . /root/envs/env-$AGDA_VER && \
     git clone -b $AGDA_VER --depth 1 https://github.com/agda/agda.git /root/agda && \
@@ -28,17 +28,14 @@ RUN . /root/envs/env-$AGDA_VER && \
 
 FROM bash:5.2
 
-ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
 COPY --from=0 /root/.cabal/bin/agda       /agda-static/bin/agda
 COPY --from=0 /root/.cabal/bin/agda-mode  /agda-static/bin/agda-mode
 COPY --from=0 /root/agda/src/data/.       /agda-static/share/agda/data
 COPY --from=0 /root/agda-libs/.           /agda-static/share/agda/libs
-COPY opt/bin/.                            /agda-static/opt/bin
-COPY opt/share/.                          /agda-static/opt/share
+COPY image_files/scripts/.                /agda-static/bin/
 
-# Gen libraries/defaults files
-# RUN /agda-static/opt/bin/agda --print-agda-data-dir && \
-#     /agda-static/opt/bin/agda --print-agda-app-dir
-
-CMD ["/agda-static/opt/bin/agda"]
+# env for agda
+ENV Agda_datadir=/agda-static/share/agda/data
+ENV AGDA_DIR=/agda-static/etc/agda
+# add to path
+ENV PATH=/agda-static/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
