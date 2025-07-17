@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+BIN_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source $BIN_DIR/agda-paths
+
+exec env Agda_datadir=$DATA_DIR AGDA_DIR=$APP_DIR $BIN_STATIC_DIR/agda $@

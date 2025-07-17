@@ -2,6 +2,7 @@
 
 # NOTE: This file should be placed in the same directory as agda
 BIN_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+BIN_STATIC_DIR=$(releases $BIN_DIR/static)
 SHR_DIR=$(realpath $BIN_DIR/../share)
 ETC_DIR=$(realpath $BIN_DIR/../etc)
 OPT_DIR=$(realpath $BIN_DIR/../opt)

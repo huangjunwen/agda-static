@@ -20,12 +20,15 @@ wget -O Agda.tar.xz \
 tar xfv Agda.tar.xz
 
 cd Agda-v${AGDA_VER}
+
+mkdir -p $BIN_STATIC_DIR
 if [[ -d "bin" ]]; then
-  cp -r bin/* $BIN_DIR # for 2.7.0.1
+  cp -r bin/* $BIN_STATIC_DIR # for 2.7.0.1
 else
-  cp -r * $BIN_DIR # for >= 2.8.0: Agda is now a self-contained single binary.
+  cp -r * $BIN_STATIC_DIR # for >= 2.8.0: Agda is now a self-contained single binary.
 fi
+
+mkdir -p $DATA_DIR
 if [[ -d "data" ]]; then
-  mkdir -p $DATA_DIR
   cp -r data/* $DATA_DIR # for 2.7.0.1
 fi
