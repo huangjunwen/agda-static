@@ -11,7 +11,7 @@ ENV AGDA_DIR=/agda/etc/agda
 # add to path
 ENV PATH=/agda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-COPY image_files/scripts/.  /agda/bin/
+COPY image_files/bin/. /agda/bin/
 
 RUN AGDA_VER=$AGDA_VER /agda/bin/download-agda && \
     AGDA_STDLIB_VER=$AGDA_STDLIB_VER /agda/bin/download-agda-stdlib
