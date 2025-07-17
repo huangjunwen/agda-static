@@ -21,4 +21,4 @@ tar xfz Agda-stdlib.tar.gz
 rm Agda-stdlib.tar.gz
 
 mkdir -p $LIBS_DIR
-cp -r * $LIBS_DIR
+mv agda-stdlib-$AGDA_STDLIB_VER $LIBS_DIR/agda-stdlib
