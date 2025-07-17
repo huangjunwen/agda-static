@@ -25,10 +25,11 @@ jobs:
     strategy:
       matrix:
         agda_version:
-        - "v2.6.4.3"
-        arch:
-        - "amd64"
-        - "i386"
+        - "2.7.0.1"
+        # https://wiki.portal.chalmers.se/agda/Libraries/StandardLibrary
+        include:
+        - agda_version: "2.7.0.1"
+          agda_stdlib_version: "2.2"
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -59,13 +60,14 @@ jobs:
         file: Dockerfile
         build-args: |
           AGDA_VER=${{ matrix.agda_version }}
+          AGDA_STDLIB_VER=${{ matrix.agda_stdlib_version }}
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.agda_version }}
         labels: ${{ steps.meta.outputs.labels }}
-        platforms: linux/${{ matrix.arch }}
+        # platforms: linux/${{ matrix.arch }}
         # cache
-        cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}-cache
-        cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.arch }}-${{ matrix.agda_version }}-cache,mode=max
+        cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.agda_version }}-cache
+        cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ matrix.agda_version }}-cache,mode=max
     - name: Generate artifact attestation
       uses: actions/attest-build-provenance@v2
       with:

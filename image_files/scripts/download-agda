@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+[[ -z "${AGDA_VER}" ]] && {
+  echo "AGDA_VER not set"
+  exit 9
+}
+
+BIN_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source $BIN_DIR/agda-paths
+
+set -ex -o pipefail
+
+rm -rf /tmp/agda
+mkdir /tmp/agda 
+trap 'rm -rf /tmp/agda' EXIT
+cd /tmp/agda
+
+wget -O Agda.tar.xz \
+  https://github.com/agda/agda/releases/download/v${AGDA_VER}/Agda-v${AGDA_VER}-linux.tar.xz
+tar xfv Agda.tar.xz
+
+cd Agda-v${AGDA_VER}
+if [[ -d "bin"]]; then
+  cp -r bin/* $BIN_DIR    # for 2.7.0.1
+else
+  cp -r * $BIN_DIR        # for >= 2.8.0: Agda is now a self-contained single binary.
+fi
+if [[ -d "data" ]]; then
+  mkdir -p $DATA_DIR
+  cp -r data/* $DATA_DIR  # for 2.7.0.1
+fi

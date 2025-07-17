@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+[[ -z "${AGDA_STDLIB_VER}" ]] && {
+  echo "AGDA_STDLIB_VER not set"
+  exit 9
+}
+
+BIN_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+source $BIN_DIR/agda-paths
+
+set -ex -o pipefail
+
+rm -rf /tmp/agda-stdlib
+mkdir /tmp/agda-stdlib
+trap 'rm -rf /tmp/agda-stdlib' EXIT
+cd /tmp/agda-stdlib
+
+wget -O Agda-stdlib.tar.gz \
+  https://github.com/agda/agda-stdlib/archive/refs/tags/v${AGDA_STDLIB_VER}.tar.gz
+tar xfz Agda-stdlib.tar.gz
+rm Agda-stdlib.tar.gz
+
+mkdir -p $LIBS_DIR
+cp -r * $LIBS_DIR
