@@ -24,8 +24,7 @@ jobs:
     # https://tomasvotruba.com/blog/2020/11/16/how-to-make-dynamic-matrix-in-github-actions/
     strategy:
       matrix:
-        agda_version:
-        - "2.7.0.1"
+        # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#example-expanding-configurations
         # https://wiki.portal.chalmers.se/agda/Libraries/StandardLibrary
         include:
         - agda_version: "2.7.0.1"
